@@ -1,4 +1,4 @@
-const dal = require("../repositories/dal").default;
+const dal = require("../repositories/dal");
 const jwt = require("jsonwebtoken");
 
 let isLoggedIn = false;
