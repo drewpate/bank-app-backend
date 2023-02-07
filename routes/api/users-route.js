@@ -26,4 +26,4 @@ router.get("/account/:username", authMiddleWare, getOneUser);
 //update checking/savings
 router.put("/transactions", authMiddleWare, updateUserBalance);
 
-export default router;
+module.exports = router;
