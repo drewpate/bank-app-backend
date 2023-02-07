@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.queryRouter();
 const dotenv = require("dotenv");
-import { authMiddleWare } from "../../middleware/auth-middleware";
+const { authMiddleWare } = require("../../middleware/auth-middleware");
 
-import {
+const {
   userLogin,
   getAllUsers,
   getOneUser,
   updateUserBalance,
   createUser,
-} from "../../controllers/users-controller";
+} = require("../../controllers/users-controller");
 
 dotenv.config();
 
