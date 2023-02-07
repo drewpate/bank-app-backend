@@ -1,6 +1,6 @@
-import { Router } from "express";
-const router = Router();
-import { config } from "dotenv";
+const express = require("express");
+const router = express.queryRouter();
+const dotenv = require("dotenv");
 import { authMiddleWare } from "../../middleware/auth-middleware";
 
 import {
@@ -11,7 +11,7 @@ import {
   createUser,
 } from "../../controllers/users-controller";
 
-config();
+dotenv.config();
 
 //create user
 router.post("/", createUser);
