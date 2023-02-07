@@ -1,12 +1,13 @@
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const bcrypt = require("bcryptjs");
-const User = require("../models/User");
+import { connect, set } from "mongoose";
+import { config } from "dotenv";
+import { genSalt, hash as _hash, compare } from "bcryptjs";
+import User from "../models/User";
 
-dotenv.config();
+config();
 
+set("strictQuery", true);
 //connect with mongoose
-mongoose.connect(
+connect(
   process.env.MONGODB_URI,
   {
     useNewUrlParser: true,
@@ -17,10 +18,10 @@ mongoose.connect(
 
 //create new user
 async function create(username, email, password) {
-  const salt = await bcrypt.genSalt(10);
+  const salt = await genSalt(10);
   if (!salt) throw Error("Something went wrong with bcrypt");
 
-  const hash = await bcrypt.hash(password, salt);
+  const hash = await _hash(password, salt);
   if (!hash) throw Error("Something went wrong hashing the password");
 
   const newUser = new User({
@@ -38,7 +39,7 @@ async function userLogin(username, password) {
   const user = await User.findOne({ username });
   if (!user) throw Error("Invalid credentials");
 
-  const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = await compare(password, user.password);
   if (!isMatch) throw Error("Invalid credentials");
 
   return user;
@@ -73,7 +74,7 @@ async function updateUserBalance(username, checkingAmount, savingsAmount) {
   );
 }
 
-module.exports = {
+export default {
   create,
   findOne,
   updateUserBalance,

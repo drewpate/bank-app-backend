@@ -1,17 +1,17 @@
-const express = require("express");
-const router = express.Router();
-const dotenv = require("dotenv");
-const { authMiddleWare } = require("../../middleware/auth-middleware");
+import { Router } from "express";
+const router = Router();
+import { config } from "dotenv";
+import { authMiddleWare } from "../../middleware/auth-middleware";
 
-const {
+import {
   userLogin,
   getAllUsers,
   getOneUser,
   updateUserBalance,
   createUser,
-} = require("../../controllers/users-controller");
+} from "../../controllers/users-controller";
 
-dotenv.config();
+config();
 
 //create user
 router.post("/", createUser);
@@ -26,4 +26,4 @@ router.get("/account/:username", authMiddleWare, getOneUser);
 //update checking/savings
 router.put("/transactions", authMiddleWare, updateUserBalance);
 
-module.exports = router;
+export default router;
